@@ -1,0 +1,12 @@
+groups:
+- name: alert.rules
+  rules:
+  - alert: response_high_failure
+    expr: sum(rate(service_a_http_response_count_total{status=~"5.."}[1m])) > 2
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      description: 'node {{ $labels.instance }} proxy service_a response failure too
+        more (current value: {{ $value }})'
+      summary: node {{ $labels.instance }} proxy service_a response failure too more
